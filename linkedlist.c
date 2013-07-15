@@ -1,6 +1,6 @@
-#include&lt;stdio.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;stdbool.h&gt;
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
 
 struct test_struct
 {
@@ -18,8 +18,8 @@ struct test_struct* create_list(int val){
         return NULL;
     }
     
-    ptr-&gt;val = val;
-    ptr-&gt;addr = NULL;
+    ptr->val = val;
+    ptr->addr = NULL;
     
     head = curr = ptr;
     return ptr;
@@ -32,14 +32,14 @@ struct test_struct* add_to_list(int val,bool before_head){
     }
     
     if(!before_head) {
-        ptr-&gt;val = val;
-        curr-&gt;addr = ptr;
+        ptr->val = val;
+        curr->addr = ptr;
         curr = ptr;
         return ptr;
     }
     else{
-        ptr-&gt;val = val;
-        ptr-&gt;addr = head;
+        ptr->val = val;
+        ptr->addr = head;
         head = ptr;
         return ptr;
     }
@@ -49,18 +49,36 @@ void print_list(){
     
     struct test_struct *ptr = head;
     printf("\nThe values of the list are\n");
-    while(ptr){
-        printf("\t%d\t",ptr-&gt;val);
-        ptr = ptr-&gt;addr;
+    while(ptr !=NULL){
+        printf("\t%d\t",ptr->val);
+        ptr = ptr->addr;
     }
     
 }
 
+ bool search_list(int val){
+	struct test_struct *ptr =head;
+	bool flag = false;
+	ptr = head;
+	while(ptr !=NULL){
+		if(ptr->val == val){
+			flag = true;
+			break;
+		}
+		ptr = ptr-> addr;
+	}
+	return flag;
+}
 void main(){
-    struct test_struct *ptr = NULL;
     add_to_list(1,false);
     add_to_list(2,false);
     add_to_list(3,false);
-    add_to_list(8,true);
+    add_to_list(8,false);
     print_list();
+    if(!search_list(2)){
+    	printf("\nThe value is not found in the list\n");
+    }
+    else{
+    	printf("The value is FOUND");
+    }
 }
