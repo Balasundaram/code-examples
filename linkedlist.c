@@ -69,6 +69,11 @@ void print_list(){
 	}
 	return flag;
 }
+
+bool delete_node(int val){
+	struct test_struct *prev=NULL;
+	struct test_struct *next=NULL;
+}
 void main(){
     add_to_list(1,false);
     add_to_list(2,false);
