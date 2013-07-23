@@ -56,8 +56,9 @@ void print_list(){
     
 }
 
- bool search_list(int val){
+ struct test_struct* search_list(int val,struct test_struct **prev){
 	struct test_struct *ptr =head;
+	struct test_struct *temp =NULL;
 	bool flag = false;
 	ptr = head;
 	while(ptr !=NULL){
@@ -65,25 +66,63 @@ void print_list(){
 			flag = true;
 			break;
 		}
-		ptr = ptr-> addr;
+		else{
+		ptr = ptr->addr;
+		}
 	}
-	return flag;
+		if(flag){
+			temp = ptr;
+		  if(prev)
+		     *prev=temp; 
+		 return ptr;
+		}
+		else{
+			return NULL;
+		}
+		
+	
+	
 }
 
 bool delete_node(int val){
 	struct test_struct *prev=NULL;
-	struct test_struct *next=NULL;
+	struct test_struct *del=NULL;
+
+    del=search_list(val,&prev);
+    
+    if(del != NULL){
+
+    	if(prev != NULL){
+    		prev->addr=del->addr;
+    		if(del == curr)
+        {
+            curr = prev;
+        }
+        else if(del == head)
+        {
+            head = del->addr;
+        }
+    		
+    	}
+    	free(del);
+    	del=NULL;
+    }
+  return false;
 }
 void main(){
+    struct test_struct *prev=NULL;    	
     add_to_list(1,false);
     add_to_list(2,false);
     add_to_list(3,false);
     add_to_list(8,false);
+    
+    delete_node(3);
     print_list();
-    if(!search_list(2)){
+    if(search_list(12,&prev) == NULL){
     	printf("\nThe value is not found in the list\n");
     }
     else{
     	printf("The value is FOUND");
     }
+
 }
